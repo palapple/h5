@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+     #container{
+        width: 500px;
+        min-height: 300px;
+        margin: auto;
+        background-color: lightgreen;
+        text-align: center;
+        padding: 10px;
+    }
+    li{list-style: none;}
+    </style>
+    <script type="text/javascript" src="./jquery.js"></script>
+    <script type="text/javascript">
+        $(function(){
+
+            // 这里的ajax用的两个嵌套请求
+            // 先从第一个php后台数据从城市名字得到cityCode，然后
+            // data = data.citycode，匹配第二个php后台数据，得到
+            // 第二个后台数据，并用字符串进行拼接。
+            $("#query").click(function(){
+                var city = ("#city").val();
+                $.ajax({
+                    type:'get',
+                    url:'./citycode.php',
+                    data: {cityName: city},
+                    dataType:'json',
+                    success:function(data){
+                        $.ajax({
+                            type:'get',
+                            url:'./cityweather.php',
+                            data:{cityCode:data.cityCode},
+                            dataType:'json',
+                            success:function(data){
+                                data = data.retData;
+                                var tag = '<ul>风向：'+data.WD+'<li>风级：'+data.WS+'</li><li>海拔：'+data.altitude+'</li><li>日期：'+data.date+'</li><li>最高温度：'+data.h_tmp+'</li><li>最低温度：'+data.l_tmp+'</li><li>平均温度：'+data.temp+'</li><li>日出时间：'+data.sunrise+'</li><li>日落时间：'+data.sunset+'</li><li>经度：'+data.longitude+'</li><li>维度：'+data.latitude+'</li></ul>';
+                                $("#info").html(tag);
+                            }
+                        })
+                    }
+                })
+        })
+    </script>
+</head>
+<body>
+    <div id="container">
+        城市名称：<input type="text" id="query">
+        <div id="info"></div>
+    </div>
+</body>
+</html>

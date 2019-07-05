@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--使用模板引擎，作用是规范化字符拼接的代码，把数据和输出格式拼接在一起 -->
+    <!-- 使用的时候，需要引入JS包才行，暂时使用腾讯的模板引擎，效率高 -->
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 模板引擎 -->
+    <script src="./template.js" type="text/javascript"></script>
+    <!-- 这里引用模板引擎，type有点不一样，需要设定id -->
+    <script type="text/html" id="template">
+        <h1>{{title}}</h1>
+        <!-- 这里的模板，用的是if判断数据中的属性，非数据名称 -->
+        <!-- each books 表示遍历全部属性 as value，后面用插值表达式进行输出 -->
+        {{if books}}
+            {{each books as value i}}
+                <div>{{value}}</div>
+            {{/each}}
+        {{/if}}
+    </script>
+
+    <script type="text/javascript">
+        window.onload = function(){
+            var data = {
+                title : '图书信息',
+                books:['三国演义','水浒传','西游记','红楼梦']
+            };
+            // template的作用就是把模板和数据拼接到一块生成一个静态HTML片段，实际就是该方法的返回值
+            // 参数一：模板id
+            // 参数二：用来渲染的数据
+            var html = template('template',data);
+            var con = document.getElementById('container');
+            con.innerHTML = html;
+        }
+            
+        </script>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+</html>
