@@ -5,3 +5,5 @@ h5，c3，JS，jquery，fullpage
 从整个项目结构来看，导入base.css，基础的css界面，然后jquery.fullPase.css，导入jquery.min,js， jquery.easing， jquery,fullPage
 
 新建mypage.css （用于控制界面组件），mypage.js（用于控制界面交互）
+
+继续测试一波
